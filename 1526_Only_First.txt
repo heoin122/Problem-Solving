@@ -1,0 +1,22 @@
+﻿/*
+	간단한 DFS 문제였다.
+	Only First
+*/
+#include <iostream>
+using namespace std;
+
+int MAX, n;
+void back(int num) {
+	if(num > n) return;
+	if(MAX < num) MAX = num;
+	
+	back(num * 10 + 4);
+	back(num * 10 + 7);
+}
+int main() {
+	scanf("%d", &n);
+	
+	back(0);
+	printf("%d", MAX);
+	return 0;
+}
