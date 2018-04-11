@@ -1,0 +1,24 @@
+/*
+	첫 줄의 모든 양수 합과 두번째 줄의 모든 양수 합을 더하는 문제였다.
+	잘 읽어보면 구현 문제임을 알 수 있다.
+*/
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+
+int main() {
+	int n;
+	scanf("%d", &n);
+	int first = 0, second = 0, temp;
+	for(int i = 1; i<=n; i++){
+		scanf("%d", &temp);
+		first += abs(temp);
+	}
+	for(int i = 1; i<=n; i++){
+		scanf("%d", &temp);
+		second += abs(temp);
+	}
+	printf("%d", first + second);
+	return 0;
+}

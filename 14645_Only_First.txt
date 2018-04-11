@@ -1,0 +1,10 @@
+/*
+	구현 문제이다.
+*/
+#include <iostream>
+using namespace std;
+
+int main() {
+	printf("비와이");
+	return 0;
+}

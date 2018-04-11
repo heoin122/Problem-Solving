@@ -1,0 +1,47 @@
+/*
+	중간중간에 연산자를 끼워넣으면서 DFS로 하나하나 해보면 된다.
+	N 범위가 작아서 백트레킹으로 해결이 가능했다.
+*/
+
+#include <iostream>
+using namespace std;
+
+int a[110], oper[10];
+int n;
+int MAX, MIN;
+void solve(int point, int sum) {
+	if(point >= n) {
+		MAX = max(MAX, sum);
+		MIN = min(MIN, sum);
+		return;
+	}
+	
+	for(int i = 0; i<4; i++){
+		if(oper[i]) {
+			int next;
+			if(i == 0) next = sum + a[point];
+			else if(i == 1) next = sum - a[point];
+			else if(i == 2) next = sum * a[point];
+			else next = sum / a[point];
+			oper[i]--;
+			solve(point + 1, next);
+			oper[i]++;	
+		}
+	}
+	
+}
+int main() {
+	scanf("%d", &n);
+	for(int i = 0; i<n; i++)
+		scanf("%d", &a[i]);
+
+	for(int i = 0; i<4; i++)
+		scanf("%d", &oper[i]);
+		
+	MAX = -1087654321;
+	MIN = 1087654321;
+	solve(1, a[0]);
+	
+	printf("%d\n%d", MAX, MIN);
+	return 0;
+}
