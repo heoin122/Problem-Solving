@@ -1,0 +1,12 @@
+/*
+	쉬운 구현 문제이다.
+*/
+#include <iostream>
+using namespace std;
+
+int main() {
+	int n, m, k;
+	scanf("%d %d %d", &n, &m, &k);
+	printf("%d %d", k / m, k - (m * (k / m)));
+	return 0;
+}
