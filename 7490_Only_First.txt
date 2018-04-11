@@ -1,0 +1,54 @@
+﻿/*
+	7490_0 만들기
+	
+	1 ~ N 까지의 수들을 + - 이어서 0을 만드는 경우의 수를 구하는 문제였다.
+	백트래킹
+	Only First
+*/
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <string>
+using namespace std;
+
+int n;
+vector <string> ANS;
+void back(int idx, int num, string ans) {
+	if(idx > n){
+		if(num == 0) {
+			ANS.push_back(ans);
+		}
+		return;
+	}
+	int ret = 0;
+	string temp;
+	for(int i = idx; i <= n; i++) {
+		ret *= 10; ret += i;	
+		temp += to_string(i); 
+		back(i + 1, num + ret , ans + "+" + temp);
+		back(i + 1, num - ret, ans + "-" + temp);
+		temp += " ";
+	}
+}
+int main() {
+	int testcase;
+	scanf("%d", &testcase);
+	while(testcase--) {
+		scanf("%d", &n);
+		int ret = 0;
+		ANS.clear();
+		string temp;
+		for(int i = 1; i<=n/2; i++){
+			ret *= 10; ret += i;
+			temp += to_string(i); 
+			back(i+1, ret, temp);
+			temp += " ";
+		}
+		sort(ANS.begin(), ANS.end());
+		for(int i = 0; i<ANS.size(); i++){
+			cout << ANS[i] << endl;
+		}
+		printf("\n");
+	}
+	return 0;
+}

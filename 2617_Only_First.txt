@@ -1,0 +1,58 @@
+/*
+	DFS로 UP 개수, DOWN 개수 찾아서 판별하는 문제였다.
+	DFS 돌리는 관점을 단순하게 잡아야 편리하게 구현할 수 있다.
+	Only First
+*/
+
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int a[110][110], chk[110];
+int cnt, n, m;
+void back(int node, vector < vector <int> > &con) {
+	for(int i = 0; i < con[node].size(); i++){
+		int next = con[node][i];
+		if(chk[next]) continue;
+		chk[next] = 1;
+		++cnt;
+		back(next, con);
+	}
+}
+int main() {
+	scanf("%d %d", &n, &m);
+	vector < vector <int> > up(n + 1), down(n + 1);
+
+	int x, y;
+	for(int i = 0; i<m; i++){
+		scanf("%d %d", &x, &y);
+		down[x].push_back(y);
+		up[y].push_back(x);
+	}
+	
+	int cut, evenCut;
+	cut = (n + 1) / 2;
+	int upCnt, downCnt, ans = 0;
+	for(int i = 1; i<=n; i++){
+		cnt = 0;
+		for(int j = 1; j<=n; j++) chk[j] = 0;
+		chk[i] = 1;
+		
+		back(i, up);
+		upCnt = cnt;
+		
+		cnt = 0;
+		for(int j = 1; j<=n; j++) chk[j] = 0;
+		chk[i] = 1;
+
+		back(i, down);
+		downCnt = cnt;
+		
+		if(upCnt >= cut || ((n % 2) && downCnt >= cut) || ((n%2 == 0) && downCnt >= cut + 1)) {
+			++ans;
+		}
+	}
+	printf("%d", ans);
+	return 0;
+}
