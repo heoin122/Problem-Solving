@@ -1,0 +1,48 @@
+/*
+큰 수 덧셈 문제이다.
+10000번째 피보나치를 구하라는 문제.
+
+일단은 vector<int>로 직접 구현하기는 했지만
+큰 수 덧셈을 더 효율적으로 하는 방법을 찾아 구현해봐야겠다. Second 
+*/
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+vector < vector < int > > a(10010);
+int main() {
+	int n;
+	scanf("%d", &n);
+	a[0].push_back(0);
+	a[1].push_back(1);
+	
+	for(int i = 2; i<=n; i++) {
+		vector <int> ret;
+		int carry = 0;
+		int pre2, pre1;
+		for(pre2 = a[i-2].size()-1, pre1 = a[i-1].size() -1; pre2 >= 0 && pre1 >= 0; pre2--, pre1--) {
+			int num = a[i-2][pre2] + a[i-1][pre1] + carry;
+			ret.push_back(num % 10);
+			carry = num / 10;
+		}
+		if(pre1 >= 0) {
+			for( ; pre1>=0; pre1--) {
+				int num = a[i-1][pre1] + carry;
+				ret.push_back(num % 10);
+				carry = num / 10;
+			}
+		}
+		if(carry) ret.push_back(carry);
+		for(int j = ret.size()-1; j>=0; j--){
+			a[i].push_back(ret[j]);
+		}
+		// for(auto it = ret.end() - 1; it != ret.begin(); it--) {
+		// 	a[i].push_back(*it);
+		// }
+	}
+	for(auto it = a[n].begin(); it != a[n].end(); it++){
+		printf("%d", *it);
+	}
+	return 0;
+}
