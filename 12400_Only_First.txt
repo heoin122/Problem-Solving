@@ -1,0 +1,27 @@
+/*
+	문자열이 주어져서 암호화하는 규칙을 알 수 있다. 
+	규칙을 찾아 변환만 시켜주면 되는 문제이다.
+	Only First
+*/
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+string a;
+char out[27] = {'y', 'h', 'e', 's', 'o', 'c', 'v', 'x', 'd', 'u', 'i', 'g', 'l', 'b', 'k', 'r', 'z', 't', 'n', 'w', 'j', 'p', 'f', 'm', 'a', 'q'};
+int main() {
+	int testcase;
+	scanf("%d\n", &testcase);
+	int ans = 1;
+	while(testcase--) {
+		getline(cin, a);
+		printf("Case #%d: ", ans++);
+		for(int i = 0; i < a.size(); i++){
+			if(a[i] >= 'a' && a[i] <= 'z') printf("%c", out[a[i]-'a']);
+			else cout << a[i];
+		}
+		printf("\n");
+	}
+	return 0;
+}

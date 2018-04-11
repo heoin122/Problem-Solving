@@ -1,0 +1,16 @@
+/*
+	N, C가 주어질때 N / C 와 N % C != 0 값을 구하는 문제이다.
+*/
+#include <iostream>
+using namespace std;
+
+int main() {
+	int testcase;
+	int a, b;
+	scanf("%d", &testcase);
+	while (testcase--) {
+		scanf("%d %d", &a, &b);
+		printf("%d\n", a / b + (a % b != 0));
+	}
+	return 0;
+}

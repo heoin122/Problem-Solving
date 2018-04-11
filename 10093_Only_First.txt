@@ -1,0 +1,21 @@
+/*
+
+범위가 10만으로 그냥 구현문제였다.
+Only First
+
+*/
+#include <iostream>
+using namespace std;
+
+int main() {
+    long long int a, b;
+    scanf("%lld %lld", &a, &b);
+    if(a > b) swap(a, b);
+    long long int ans = b - a -1;
+    if(ans < 0) ans = 0;
+    printf("%lld\n", ans);
+    for(long long int i = a+ 1; i < b; i++){
+        printf("%lld ", i);
+    }
+    return 0;
+}
