@@ -1,0 +1,32 @@
+/*
+6064_카잉 달력
+m n x y가 주어지고
+1~m / 1~ n으로 차례로 증가했을 때 x, y가 되는 카운팅 수를 구하는 문제이다.
+
+x로 시작하여 m씩 증가하여 y가 만들어지는지를 확인하여 구현했다. 
+시간 복잡도를 미리 확인하는 방법을 키워야겠다. In Second
+*/
+#include <iostream>
+using namespace std;
+
+int main() {
+	int testcase;
+	scanf("%d", &testcase);
+
+	int m, n, x, y;
+	while(testcase--) {
+		scanf("%d %d %d %d", &m, &n, &x, &y);
+		int last = m * n;
+		
+		bool found = false;
+		for(int num = x; num <= last; num += m) {
+			if((num - 1) % n + 1 == y) {
+				printf("%d\n", num);
+				found = true;
+				break;
+			}
+		}
+		if(!found) printf("-1\n");
+	}
+	return 0;
+}
