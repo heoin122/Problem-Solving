@@ -1,0 +1,55 @@
+﻿/*
+	BFS 탐색으로 노드들 간의 몇 번 거쳐서 가는지를 구하는 문제이다.
+	Only First
+*/
+#include <iostream>
+#include <queue>
+#include <vector>
+
+using namespace std;
+
+int a[60][60], chk[60][60], val[60];
+int n;
+int main() {
+	scanf("%d", &n);
+	int x, y;
+	while(true){
+		scanf("%d %d", &x, &y);
+		if(x == -1 && y == -1) break;
+		a[x][y] = a[y][x] = 1;
+	}
+	
+	for(int i = 1; i<=n; i++){
+		queue < pair <int, int> > Q;
+		vector <int> chk(n+1, 0);
+		Q.push(make_pair(i, 1));
+		chk[i] = 1;
+		while(!Q.empty()) {
+			pair<int, int> cur = Q.front();
+			Q.pop();
+			int curNode = cur.first;
+			int curNum = cur.second;
+			for(int j = 1; j<=n; j++){
+				if(chk[j]) continue;
+				if(a[curNode][j]) {
+					chk[j] = curNum;
+					Q.push(make_pair(j, curNum + 1));
+				}
+			}
+		}
+		for(int j = 1; j<=n; j++){
+			if(val[i] < chk[j]) val[i] = chk[j];
+		}
+	}
+	int MIN = 987654321;
+	for(int i = 1; i<=n; i++){
+		if(MIN > val[i]) MIN = val[i];
+	}
+	vector <int> ans;
+	for(int i = 1; i<=n; i++){
+		if(MIN == val[i]) ans.push_back(i);
+	}
+	printf("%d %d\n", MIN, ans.size());
+	for(int i = 0; i<ans.size(); i++) printf("%d ", ans[i]);
+	return 0;
+}

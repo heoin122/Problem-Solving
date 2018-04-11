@@ -1,0 +1,65 @@
+﻿/*
+	위상 정렬의 값과 그 값으로 통과할 수 있는 간선의
+	개수를 구하는 문제였다. 한번 더 탐색해서 같은 값을 추적하면 된다.
+	Only First
+*/
+
+#include <iostream>
+#include <string.h>
+#include <vector>
+
+
+using namespace std;
+
+int n, e, ans;
+int cache[10010];
+int START, END;
+void back(vector < vector <int> > &a, vector < vector <int> > &val, vector < vector <int> > &chk, int node, int sum) {
+	for(int i = 0; i<a[node].size(); i++) {
+		int next = a[node][i];
+		if(cache[next] + val[node][i] + sum == ans) {
+			chk[node][i] = 1;
+			back(a, val, chk, next, sum + val[node][i]);
+		}
+	}
+}
+int search(vector < vector <int> > &a, vector < vector <int> > &val, int node) {
+	int &ret = cache[node];
+	if(ret != -1) return ret;
+	
+	if(node == END) {
+		return ret = 0;	
+	}
+	for(int i = 0; i < a[node].size(); i++) {
+		int next = a[node][i];
+		int temp = search(a, val, next) + val[node][i];
+		if(ret < temp) ret = temp;
+	}
+	return ret;
+}
+int main() {
+	scanf("%d", &n);
+	scanf("%d", &e);
+
+	vector < vector <int> > a(n+1), val(n+1), chk(n+1);
+	int x, y, v;
+	for(int i = 0; i<e; i++){
+		scanf("%d %d %d", &x, &y, &v);
+		a[x].push_back(y);
+		val[x].push_back(v);
+		chk[x].push_back(0);
+	}
+	memset(cache, -1, 10010 * sizeof(int));
+	scanf("%d %d", &START, &END);
+	ans = search(a, val, START);
+	printf("%d\n", ans);
+	back(a, val, chk, START, 0);
+	int sum = 0;
+	for(int i = 1; i<=n; i++){
+		for(int j = 0; j<chk[i].size(); j++){
+			sum += chk[i][j];
+		}
+	}
+	printf("%d", sum);
+	return 0;
+}
