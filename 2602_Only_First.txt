@@ -1,0 +1,49 @@
+﻿/*
+	DFS로만 해결했을 경우 시간초과가 나는 문제였다.
+	구현은 단순했다.
+	완전 탐색의 경우 시간초과 체크를 잘 해보자!
+	Only First
+*/
+
+#include <iostream>
+#include <string.h>
+#include <string>
+
+using namespace std;
+
+int cache[21][2][101];
+string S;
+string a[2];
+
+int back(int idx, int row, int point) {
+	int &ret = cache[idx][row][point];
+	if(ret != -1) return ret;
+
+	if(idx == S.size()) return ret = 1;
+	ret = 0;
+	for(int i = point; i < a[row].size(); i++) {
+		if(S[idx] == a[row][i]) {
+			ret += back(idx + 1, 1 - row, i + 1);	
+		}
+	}
+	return ret;
+}
+int main() {
+	cin >> S;
+	cin >> a[0];
+	cin >> a[1];
+	memset(cache, -1, 4242 * sizeof(int));
+	int ans = 0;
+	for(int i = 0; i<a[0].size(); i++){
+		if(a[0][i] == S[0]) {
+			ans += back(1, 1, i+1);	
+		}
+	}
+	for(int i = 0; i<a[1].size(); i++) {
+		if(a[1][i] == S[0]) {
+			ans += back(1, 0, i+1);
+		}
+	}
+	printf("%d", ans);
+	return 0;
+}

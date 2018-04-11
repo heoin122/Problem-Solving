@@ -1,0 +1,29 @@
+﻿/*
+	문자열을 이용한 구현문제이다. ( cnt[A - 'a'] ++ ) 
+	Only First
+*/
+
+#include <iostream>
+#include <cmath>
+#include <string>
+
+using namespace std;
+
+int cnt[30];
+int main() {
+	string temp;
+	cin >> temp;
+	for(auto it = temp.begin(); it != temp.end(); it++){
+		cnt[*it-'a']++;
+	}
+	cin >> temp;
+	for(auto it = temp.begin(); it != temp.end(); it++){
+		cnt[*it-'a']--;
+	}
+	int ans = 0;
+	for(int i = 0; i<26; i++){
+		ans += abs(cnt[i]);
+	}
+	printf("%d", ans);
+	return 0;
+}

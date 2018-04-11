@@ -1,0 +1,57 @@
+﻿/*
+	2636_치즈
+	
+	완전탐색을 돌리면서 외부 공기인지를 판별하고 Flood Fil
+	한 번씩 치즈를 제거해주면 된다. 
+	Only First
+*/
+#include <iostream>
+#include <string.h>
+
+using namespace std;
+
+int a[110][110], t[110][110], dir[4][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+int n, m;
+
+void back(int row, int col) {
+	t[row][col] = 1;
+	for(int i = 0; i<4; i++){
+		int nextRow = row + dir[i][0];
+		int nextCol = col + dir[i][1];
+		
+		if(nextRow < 1 || nextRow > n || nextCol < 1 || nextCol > m || a[nextRow][nextCol]  == 1 || t[nextRow][nextCol] == 1) continue;
+		back(nextRow, nextCol);
+	}
+}
+int main() {
+	scanf("%d %d", &n, &m);
+	
+	int cheese = 0;
+	for(int i = 1; i<=n; i++){
+		for(int j = 1; j<=m; j++){
+			scanf("%d", &a[i][j]);
+			cheese += a[i][j];
+		}
+	}
+	
+	int ans = 0, ans2 = cheese;
+	while(cheese){
+		++ans;
+		back(1, 1);
+		for(int i = 1; i<=n; i++){
+			for(int j = 1; j<=m; j++){
+				if(a[i][j] == 1) {
+					int sum = t[i-1][j] + t[i][j-1] + t[i+1][j] + t[i][j+1];
+					if(sum >= 1) {
+						a[i][j] = 0;
+						cheese--;
+					}
+				}
+			}
+		}
+		if(cheese != 0) ans2 = cheese;
+		memset(t, 0, 12100 * sizeof(int));
+	}
+	printf("%d\n%d", ans, ans2);
+	return 0;
+}

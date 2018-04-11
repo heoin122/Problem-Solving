@@ -1,0 +1,49 @@
+﻿/*
+	구조체 정렬을 이용한 구현문제이다.
+	Only First
+*/
+
+
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+struct G {
+	int gold, silver, metal, num;
+};
+
+bool cmp(G A, G B) {
+	if(A.gold == B.gold) {
+		if(A.silver == B.silver) {
+			return A.metal > B.metal;
+		}
+		return A.silver > B.silver;
+	}
+	return A.gold > B.gold;
+}
+
+G a[1010];
+int main() {
+	int n, m;
+	scanf("%d %d", &n, &m);
+	for(int i = 0; i<n; i++){
+		scanf("%d %d %d %d", &a[i].num, &a[i].gold, &a[i].silver, &a[i].metal);
+	}
+	sort(a, a+n, cmp);
+	for(int i = 0; i<n; i++){
+		if(a[i].num == m) {
+			int ans = 1;
+			for(int j = i-1; j>=0; j--) {
+				if(a[i].gold != a[j].gold || a[i].silver != a[j].silver || a[i].metal != a[j].metal) {
+					ans = j + 2;
+					break;				
+					
+				}
+			}
+			printf("%d", ans);
+			break;
+		}
+	}
+	return 0;
+}
