@@ -1,0 +1,39 @@
+﻿/*
+	2629_양팔저울
+
+	순환적 dp를 이용하여 해결하였다.
+	재귀적 dp로 해결하는 방법을 알아봐야겠다.
+	First
+*/
+#include <iostream>
+using namespace std;
+
+int arr[40];
+int D[40][40010];
+int main() {
+	int n, m;
+	scanf("%d", &n);
+	for(int i = 0; i<n; i++){
+		scanf("%d",  &arr[i]);
+	}
+	D[0][arr[0]] = 1;
+	for(int i = 1; i<n; i++){
+		for(int j = 0; j<=40000; j++) D[i][j] = D[i-1][j];
+		for(int j = 0; j<=40000; j++){
+			if(D[i-1][j]) {
+				D[i][abs(j-arr[i])] = 1;
+				if(j + arr[i] <= 40000) D[i][j + arr[i]] = 1;
+			}
+		}
+		D[i][arr[i]] = 1;
+	}
+	scanf("%d", &m);
+	for(int i = 0; i<m; i++){
+		int temp;
+		scanf("%d", &temp);
+		if(D[n-1][temp]) printf("Y ");
+		else printf("N ");
+		
+	}
+	return 0;
+}

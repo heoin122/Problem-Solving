@@ -1,0 +1,48 @@
+﻿/*
+	구현문제였지만, 코딩 정확성이 조금 부족하였다.
+	2 Error -> 간격이 0인 것을 고려하지 못했고, 마지막 문자까지 
+	비교하는지 확인을 못했다.
+*/
+
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int isPossible(string &A, string &B) {
+	if(A.size() < B.size()) return -1;
+
+	for(int i = 0; i<=A.size() - B.size(); i++) {
+		int dis = (B[0] - A[i] + 26) % 26;
+		bool correct = true;
+		for(int now = 0; now <B.size(); now++) {
+			if((B[now] - A[i + now] + 26) % 26 != dis){
+				correct = false;
+				break;
+			}
+		}
+		if(correct) {
+			return dis;
+		}
+	}
+	return -1;
+}
+int main() {
+	int n;
+	string A, B;
+	cin >> A;
+	
+	scanf("%d", &n);
+	for(int i = 0; i<n; i++){
+		cin >> B;
+		
+		int num = isPossible(A, B);
+		if(num >= 0) {
+			for(int j = 0; j<A.size(); j++){
+				printf("%c", (A[j]-'a'+num) % 26 + 'a');
+			}
+			break;
+		}
+	}
+	return 0;
+}

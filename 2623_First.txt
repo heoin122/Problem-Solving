@@ -1,0 +1,52 @@
+﻿/*
+	2623_음악프로그램
+	
+	위상정렬을 이용하여 해결하는 문제였다. 사이클이 생길경우 0을 출력하고 나머진 위상정렬
+	위상정렬을 재귀로 해결하는 방법을 더 공부해야겠다.
+	순환문으로 구현했다.
+	First
+*/
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+vector < vector <int> > con;
+int chk[1010], in[1010];
+int n, m;
+int main() {
+	scanf("%d %d", &n, &m);
+
+	con = vector < vector <int> > (n + 1);
+	int k, x, y;
+	for(int i = 0; i<m; i++){
+		scanf("%d", &k);
+		scanf("%d", &x);
+		for(int i = 1; i<k; i++){
+			scanf("%d", &y);
+			con[x].push_back(y);
+			in[y]++;
+			x = y;
+		}
+	}
+	
+	vector <int> zero, ans;
+	for(int i = 1; i<=n; i++){
+		if(in[i] == 0) zero.push_back(i);
+	}
+	for(int i = 0; i<n; i++){
+		if(zero.size() <= i) break;
+		ans.push_back(zero[i]);
+		for(int j = 0; j<con[zero[i]].size(); j++){
+			int next = con[zero[i]][j];
+			in[next]--;
+			if(in[next] == 0) zero.push_back(next);
+		}
+		in[zero[i]] = -1;
+	}	
+	if(ans.size() != n) printf("0");
+	else {
+		for(int i = 0; i<ans.size(); i++) printf("%d\n", ans[i]);
+	}
+	return 0;
+}

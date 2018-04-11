@@ -1,0 +1,59 @@
+﻿/*
+	1787_문자열 주기 예측
+	
+	KMP, Partial Match Table, DP
+
+	부분 일치 테이블을 이용해서 최소의 일치 길이를 구하는 문제였다.
+	최소 일치 길이를 그냥 구하게되면 시간초과로 DP로 구현해야 한다.
+	First
+*/
+#include <iostream>
+#include <string.h>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+char temp[1000010];
+int cache[1000010];
+vector<int> getPartialMatch(const string& arr) {
+	int n = arr.size();
+	vector<int> pi(n);
+	int begin = 1, matched = 0;
+	while(begin + matched < n) {
+		if(arr[begin+matched] == arr[matched]) {
+			pi[begin+matched] = matched + 1;
+			matched++;
+		} else {
+			if(matched == 0) begin++;
+			begin += matched - pi[matched-1];
+			matched = pi[matched-1];
+		}
+	}
+	return pi;
+}
+int dp(const vector<int>& pi, int num) {
+	int &ret = cache[num];
+	if(ret != -1) return ret;
+	if(num == 0) return 0;
+
+	int temp = dp(pi, pi[num-1]);
+	if(temp == 0) return ret = num;
+	return ret = temp;
+}
+int main() {
+	int n;
+	scanf("%d", &n);
+	scanf("%s", temp);
+	string arr = string(temp);
+	
+	vector<int> pi = getPartialMatch(arr);
+	memset(cache, -1, 1000010 * sizeof(int));	
+	long long int ans = 0;
+	for(int i = n-1; i>=1; i--){
+		int TT = dp(pi, pi[i]);
+		if(TT != 0) ans += i + 1 - dp(pi, pi[i]);
+	}
+	printf("%lld", ans);
+	return 0;
+}

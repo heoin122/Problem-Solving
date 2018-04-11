@@ -1,0 +1,93 @@
+﻿/*
+	해결 방법을 확실하게 찾는데 어려움이 있었다.
+	방법을 찾고 이것이 확실한지 증명이 안되서 문제가 있었다.
+	증명하는 방법을 공부하고, 다양한 풀이법에 대해 알아봐야겠다.
+	First
+*/
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int n;
+int main() {
+	scanf("%d", &n);
+	vector <int> a(n);
+	vector <int> temp(n);
+	for(int i = 0; i<n; i++){
+		scanf("%d", &a[i]);
+		temp[i] = a[i];
+	}
+	
+	int cut = 3;
+	vector < pair < int, int > > ans;
+	while(cut--){
+		int left, right;
+		bool isFinished = true;
+		for(int i = 0; i<n; i++){
+			if(i + 1 != a[i]) {
+				left = i;	
+				isFinished = false;
+				for(int j = 0; j<n; j++){
+					if(a[j] == i + 1) {
+						right = j;
+						break;
+					}
+				}
+				break;
+			}
+		}
+		if(isFinished) {
+			for(int i = 2 - ans.size(); i >= 1; i--) {
+				printf("1 1\n");
+			}
+			for(int i = 0; i < ans.size(); i++){
+				printf("%d %d\n", ans[i].first, ans[i].second);
+			}
+			break;
+		}
+		ans.push_back(make_pair(left + 1, right + 1));
+		while(left < right) {
+			swap(a[left], a[right]);
+			left++; right--;
+		}
+		
+	}
+	if(ans.size() > 2) {
+		ans.clear();
+		for(int i = 0; i<n; i++) a[i] = temp[i];
+		while(cut--){
+			int left, right;
+			bool isFinished = true;
+			for(int i = n-1; i>=0; i--){
+				if(i + 1 != a[i]) {
+					right = i;	
+					isFinished = false;
+					for(int j = 0; j<n; j++){
+						if(a[j] == i + 1) {
+							left = j;
+							break;
+						}
+					}
+					break;
+				}
+			}
+			if(isFinished) {
+				for(int i = 2 - ans.size(); i >= 1; i--) {
+					printf("1 1\n");
+				}
+				for(int i = 0; i < ans.size(); i++){
+					printf("%d %d\n", ans[i].first, ans[i].second);
+				}
+				break;
+			}
+			ans.push_back(make_pair(left + 1, right + 1));
+			while(left < right) {
+				swap(a[left], a[right]);
+				left++; right--;
+			}
+			
+		}
+	}
+	return 0;
+}

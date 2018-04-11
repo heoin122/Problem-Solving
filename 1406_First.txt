@@ -1,0 +1,51 @@
+﻿/*
+	연결리스트를 이용해야하는 문제이다.
+	<list> 에서 iterator 컨트롤이 미숙했다.
+	it을 추가하고 제거하는데 어떻게 변화하는지 다시 한번 숙지가 필요하다.
+	* it = A.erase(it);
+	First
+*/
+
+#include <iostream>
+#include <cstring>
+#include <list>
+
+using namespace std;
+
+char a[100010];
+void print(list <char> &A) {
+	for(auto Ait = A.begin(); Ait != A.end(); Ait++) {
+			printf("%c", *Ait);
+	}
+}
+int main() {
+	int n;
+	scanf("%s", a);
+	scanf("%d", &n);
+
+	list <char> A;
+	int size = strlen(a);
+	for(int i = 0; i<size; i++) {
+		A.push_back(a[i]);
+	}
+
+	list <char>:: iterator it = A.end();
+	char type, temp;
+	for(int i = 0; i<n; i++){
+		cin >> type;
+		if(type == 'L') {
+			if(it != A.begin()) it--;
+		} else if(type == 'D') {
+			if(it != A.end()) it++;
+		} else if(type == 'B') {
+            if(it != A.begin()) it--;
+            else continue;
+            it = A.erase(it);
+		} else if(type == 'P') {
+			cin >> temp;
+            A.insert(it, temp);
+        }
+	}
+	print(A);
+	return 0;
+}
