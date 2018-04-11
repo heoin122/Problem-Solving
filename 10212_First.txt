@@ -1,0 +1,19 @@
+/*
+	주소값을 이용하여 랜덤 값을 얻는 방법이었다.
+
+	long long int *temp = (long long int*)malloc(sizeof(long long int));
+	printf("%s", ((long long int)temp % 5 ? "Yonsei" :"Korea"));
+	
+	주소값은 항상 짝수로 나오기 때문에 홀수로 나누면 어느정도 랜덤이 된다
+*/
+
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+int main() {
+	long long int *temp = (long long int*)malloc(sizeof(long long int));
+	printf("%s", ((long long int)temp % 5 ? "Yonsei" :"Korea"));
+	return 0;
+}
+
