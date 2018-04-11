@@ -1,0 +1,28 @@
+﻿/*
+	단순한 구현 문제라고 생각하면 틀릴 수 있는 문제이다.
+	함정에 걸리지 않게 다시 한 번 생각하자.
+	First
+*/
+
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+int main() {
+	int n, m, k;
+	scanf("%d %d %d", &n, &m, &k);
+	n += m;
+	int ans = n / k;
+	m = n % k;
+	n /= k;
+	while(true){
+		n += m;
+		if(n / k == 0) break;
+		ans += n / k;
+		m = n % k;
+		n /= k;
+	}
+	printf("%d", ans);
+	return 0;
+}
