@@ -1,0 +1,27 @@
+﻿/*
+	구현 문제였다.
+	Only First
+*/
+
+#include <iostream>
+using namespace std;
+
+int n, m;
+int room[5][3];
+int main() {
+	scanf("%d %d", &n, &m);
+	
+	int sex, age;
+	for(int i = 0; i<n; i++){
+		scanf("%d %d", &sex, &age);
+		room[(age-1)/2][sex]++;
+	}
+	int ans = (room[0][0] + room[0][1]) / m + ((room[0][0] + room[0][1]) % m != 0);
+	ans += room[1][0] / m + ((room[1][0] % m != 0));
+	ans += room[1][1] / m + ((room[1][1] % m != 0));
+	ans += room[2][0] / m + ((room[2][0] % m != 0));
+	ans += room[2][1] / m + ((room[2][1] % m != 0));
+	
+	printf("%d", ans);
+	return 0;
+}

@@ -1,0 +1,29 @@
+﻿/*
+	FOR 문 연습을 할 수 있는 구현 문제이다.
+	Only_First
+*/
+
+#include <iostream>
+
+using namespace std;
+
+char a[60][60];
+int main() {
+	int n, m, x, y;
+	scanf("%d %d %d %d", &n, &m, &x, &y);
+	for(int i = 0; i<n; i++){
+		scanf("%s", a[i]);		
+	}
+	
+	for(int i = 0; i<n; i++){
+		for(int xi = 0; xi < x; xi++) {
+			for(int j = 0; j<m; j++){
+				for(int yi = 0; yi < y; yi++){
+					printf("%c", a[i][j]);
+				}
+			}
+			printf("\n");
+		}
+	}
+	return 0;
+}

@@ -1,0 +1,39 @@
+﻿/*
+	간단한 이분법 문제였다.
+	Only First
+*/
+
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+int a[1000010];
+int n, m;
+bool isPossible(int h) {
+	long long int ret = 0;
+	for(int i = 0; i<n; i++){
+		ret += a[i] > h ? a[i] - h : 0;
+		if(ret > 2000000000) return true;
+	}
+	if(ret >= m) return true;
+	return false;
+}
+int main() {
+	scanf("%d %d", &n, &m);
+	for(int i = 0; i<n; i++){
+		scanf("%d", &a[i]);
+	}
+	int left  = 1, right = 1000000000;
+	
+	while(left <= right) {
+		int mid = (left + right) / 2;
+		if(isPossible(mid)) {
+			left = mid + 1;
+		} else {
+			right = mid - 1;
+		}
+	}
+	printf("%d", right);
+	return 0;
+}
