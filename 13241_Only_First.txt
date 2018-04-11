@@ -1,0 +1,20 @@
+/*
+	long long int 범위에서 최소공배수를 구하는 문제이다.
+	Only First
+*/
+#include <iostream>
+using namespace std;
+
+long long int a, b;
+long long int gcd(long long int a, long long int b) {
+	return b == 0 ? a : gcd(b, a%b);
+}
+int main() {
+	scanf("%lld %lld", &a, &b);
+	if(a * b == 0) printf("0");
+	else {
+		long long int G = gcd(a, b);
+		printf("%lld", a * b / G);
+	}
+	return 0;
+}
