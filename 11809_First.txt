@@ -1,0 +1,43 @@
+/*
+	두 수열이 충돌하면 각 자리마다 큰 값이 남고 작은 값은 사라지고 같으면 둘다 살아남는다.
+	이 때 살아남은 값들의 정수값을 구하는 문제였다.
+	String to Int : atoi() 
+	좀 더 깔끔하게 구현하는 연습을 해보자. In Second
+*/
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+	string a, b;
+	cin >> a >> b;
+
+	string ansA, ansB;
+	int aIdx, bIdx;
+	for(aIdx = a.size()-1, bIdx = b.size()-1; aIdx >= 0 && bIdx >= 0; aIdx--, bIdx--) {
+		if(a[aIdx] > b[bIdx]) ansA += a[aIdx];
+		else if(a[aIdx] < b[bIdx]) ansB += b[bIdx];
+		else {
+			ansA += a[aIdx];
+			ansB += b[bIdx];
+		}
+	}
+	while(aIdx >= 0) ansA += a[aIdx--];
+	while(bIdx >= 0) ansB += b[bIdx--];
+	if(ansA.size() == 0) printf("YODA\n");
+	else {
+		string reverseA;
+		for(auto it = ansA.end() - 1; it >= ansA.begin(); it--) reverseA += *it;
+				
+		cout << atoi(reverseA.c_str()) << endl;
+	}
+	if(ansB.size() == 0) printf("YODA\n");
+	else {
+		string reverseB;
+		for(auto it = ansB.end() - 1; it >= ansB.begin(); it--) reverseB += *it;
+		
+		cout << atoi(reverseB.c_str());
+		
+	}
+	return 0;
+}

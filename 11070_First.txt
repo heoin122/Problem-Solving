@@ -1,0 +1,46 @@
+/*
+	long long int 확인을 잘해야겠다.
+	소수 계산을 더 자세히 공부하자.
+	In Second
+*/
+#include <iostream>
+#include <string>
+#include <string.h>
+#include <vector>
+#include <algorithm>
+#include <cmath>
+#include <queue>
+#include <list>
+
+using namespace std;
+
+int win[1010], lose[1010];
+int main() {
+	int t;
+	int n, m;
+	scanf("%d", &t);
+	int a, b, x, y;
+	while (t--) {
+		scanf("%d %d", &n, &m);
+		for (int i = 1; i <= m; i++) {
+			scanf("%d %d %d %d", &a, &b, &x, &y);
+			win[a] += x;
+			lose[a] += y;
+			win[b] += y;
+			lose[b] += x;
+		}
+		long long int W, Max = 0, Min = 2e17;
+		for (int i = 1; i <= n; i++) {
+			if(win[i] == 0 && lose[i] == 0) W = 0;
+			else W = ((long long int)win[i] * win[i]) * 1000 / ((win[i] * win[i]) + (lose[i] * lose[i]));
+			if (Max < W) Max = W;
+			if (Min > W) Min = W;
+		}
+		printf("%d\n%d\n", Max, Min);
+		for (int i = 1; i <= n; i++) {
+			win[i] = lose[i] = 0;
+		}
+	}
+
+	return 0;
+}
