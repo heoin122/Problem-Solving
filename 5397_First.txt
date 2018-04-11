@@ -1,0 +1,43 @@
+﻿/*
+	5397_키로거
+
+	연결리스트를 이용하여 메모장 입력하듯이 하는 문제였다.
+	1406번 문제와 아주 유사하다. 연결리스트 사용을 정확히 알지 못하고
+	STL 기능이 머리 속에서 정리가 잘 안되있다. 확인필요.
+	First
+*/
+#include <iostream>
+#include <string.h>
+#include <list>
+
+using namespace std;
+
+char arr[1000010];
+
+int main() {
+	int testcase;
+	scanf("%d", &testcase);
+	while(testcase--) {
+		scanf("%s", arr);
+		int n = strlen(arr);
+		list<char> l;
+		list<char>::iterator cursor = l.end();
+		for(int i = 0; i<n; i++){
+			if(arr[i] == '<') {
+				if(cursor != l.begin()) cursor--;
+			} else if(arr[i] == '>') {
+				if(cursor != l.end()) cursor++;
+			} else if(arr[i] == '-') {
+				if(cursor == l.begin()) continue;
+				cursor--;
+				cursor = l.erase(cursor);
+			} else {
+				l.insert(cursor, arr[i]);
+			}
+		}
+		for(auto it = l.begin(); it != l.end(); it++){
+			printf("%c", *it);
+		} printf("\n");
+	}
+	return 0;
+}
