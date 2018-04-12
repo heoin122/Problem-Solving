@@ -1,0 +1,46 @@
+﻿/*
+	2941_크로아티아 알파벳
+
+	문자열 비교하는 구현 문제였다.
+	string STL을 잘 이용하면 된다.
+	Only First
+*/
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+bool isExistCro(const vector<string>& cro, const string& temp) {
+	for(int i = 0; i<cro.size(); i++){
+		if(cro[i] == temp) return true;
+	}
+	return false;
+}
+int main() {
+	string a;
+	cin >> a;
+	vector<string> cro;
+	cro.push_back("c="); cro.push_back("c-"); cro.push_back("dz="); cro.push_back("d-"); 
+	cro.push_back("lj"); cro.push_back("nj"); cro.push_back("s="); cro.push_back("z="); 
+	
+	int idx = 0, ans = 0;
+	while(idx < a.size()) {
+		string temp = "";
+		temp += a.substr(idx, 3);
+		if(isExistCro(cro, temp)) {
+			++ans;
+			idx += 3;
+		} else {
+			temp.pop_back();
+			if(isExistCro(cro, temp)) {
+				++ans;
+				idx += 2;
+			} else {
+				++ans;
+				idx++;
+			}	
+		}
+	}
+	printf("%d", ans);
+	return 0;
+}

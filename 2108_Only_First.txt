@@ -1,0 +1,58 @@
+﻿#include <iostream>
+/*
+	2108_통계학
+
+	구현 문제였다.
+	초기화를 잘하자.
+	Only_First
+*/
+#include <algorithm>
+#include <vector>
+
+using namespace std;
+
+int a[500010], chk[10000];
+int main() {
+	int n;
+	scanf("%d", &n);
+	for(int i = 0; i<n; i++) scanf("%d", &a[i]);
+	
+	int third = 0, second;
+	double first;
+	double sum = 0;
+	int MAX = -5000, MIN = 5000;
+	vector<int> most;
+	for(int i = 0; i<n; i++){
+		sum += a[i];
+		if(MAX < a[i]) MAX = a[i];
+		if(MIN > a[i]) MIN = a[i];
+		if(a[i] < 0) {
+			chk[5000 - a[i]]++;
+			if(third < chk[5000 - a[i]]) {
+				third = chk[5000 - a[i]];
+				most.clear();
+				most.push_back(a[i]);
+			} else if(third == chk[5000 - a[i]]) {
+				most.push_back(a[i]);
+			}
+		}
+		else {
+			chk[a[i]]++;
+			if(third < chk[a[i]])  {
+				third = chk[a[i]];
+				most.clear();
+				most.push_back(a[i]);
+			} else if(third == chk[a[i]]) {
+				most.push_back(a[i]);
+			}
+		}
+	}
+	sort(a, a+n);
+	printf("%0.0lf\n%d\n", sum / (double)n, a[n/2]);
+	if(most.size() == 1) printf("%d\n%d", most[0], MAX - MIN);
+	else if(most.size() > 1) {
+		sort(most.begin(), most.end());
+		printf("%d\n%d", most[1], MAX - MIN);
+	} 
+	return 0;
+}
