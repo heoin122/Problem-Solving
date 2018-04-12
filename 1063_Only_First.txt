@@ -1,0 +1,45 @@
+﻿/*
+	1063_킹
+
+	주어진 방향대로 말을 움직이면 되는 문제였다. 
+	구현
+	Only_First
+*/
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int dir[12][2] = {{0, 1}, {0, -1}, {0, 0}, {-1, 0}, {1, 0}, {1, 1}, {0, 0}, {1, -1}, {0, 0}, {-1, 1}, {0, 0}, {-1, -1}};
+char king[5], dol[5];
+int main() {
+	int n;
+	scanf("%s %s %d\n", king, dol, &n);
+	string type;
+	string direction = "RLXBTRTLTRBLB";
+	
+	int kingCol = king[0] - 'A' + 1, kingRow = king[1] - '0';
+	int dolCol = dol[0] - 'A' + 1, dolRow = dol[1] - '0';
+	
+	for(int i = 0; i<n; i++){
+		cin >> type;
+		int t = direction.find(type);
+		
+		int goKingRow = kingRow + dir[t][0];
+		int goKingCol = kingCol + dir[t][1];
+		
+		if(goKingRow < 1 || goKingRow > 8 || goKingCol < 1 || goKingCol > 8) continue;
+		if(goKingRow == dolRow && goKingCol == dolCol) {
+			int goDolRow = dolRow + dir[t][0];
+			int goDolCol = dolCol + dir[t][1];
+			if(goDolRow < 1 || goDolRow > 8 || goDolCol < 1 || goDolCol > 8) continue;
+			dolRow = goDolRow;
+			dolCol = goDolCol;
+		}
+		kingRow = goKingRow;
+		kingCol = goKingCol;
+	}
+	printf("%c%d\n", kingCol + 'A' - 1, kingRow);
+	printf("%c%d\n", dolCol + 'A' - 1, dolRow);
+	return 0;
+}

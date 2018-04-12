@@ -1,0 +1,33 @@
+﻿/*
+	1011_Fly me to the Alpha Centauri 
+
+	그리디 문제였다.
+	1 2 3 3 2 1 꼴이나 1 2 3 4 3 2 1 꼴로 생각해서
+	입력으로 주어진 차이를 처음 넘어설 때로 계산한다.
+	long long int를 사용하여 int 범위를 넘어간 경우도 생각하자.
+	Only_First
+*/
+#include <iostream>
+using namespace std;
+
+int main() {
+	int t;
+	scanf("%d", &t);
+	while(t--) {
+		int a, b;
+		long long int temp;
+		scanf("%d %d", &a, &b);
+		temp = b - a;
+		if(temp == 1) { printf("1\n"); continue; }
+		for(long long int i = 1; ; i++){
+			if(i * i + i >= temp) {
+				printf("%d\n", i * 2);
+				break;
+			} else if(i * i + 2 * i + 1 >= temp) {
+				printf("%d\n", i * 2 + 1);
+				break;
+			}
+		}
+	}
+	return 0;
+}
