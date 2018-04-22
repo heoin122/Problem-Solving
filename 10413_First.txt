@@ -1,0 +1,73 @@
+﻿/*
+	10413_반복되는 부분 문자열
+	
+	Suffix Array와 LCP Array를 이용하는 문제였다.
+	Suffix Array에서 cmp 함수를 잘 작성하자! 
+	First
+*/
+#include <iostream>
+#include <string.h>
+#include <algorithm>
+
+using namespace std;
+
+int sa[100010], g[100010], tg[100010], r[100010], lcp[100010];
+char a[100010];
+int t, n;
+
+bool cmp(int x, int y) {
+	if(g[x] != g[y]) return g[x] < g[y];
+	x += t;
+	y += t;
+	return (x < n && y < n) ? (g[x] < g[y]) : (x > y);
+}
+int main() {
+	int testcase;
+	
+	scanf("%d", &testcase);
+	while(testcase--) {
+		scanf("%s", a);
+		n = strlen(a);
+		for(int i = 0; i < n; i++) {
+			sa[i] = i;
+			g[i] = a[i] - 'a';
+		}		
+		t = 1;
+		while(t <= n) {
+			g[n] = -1;
+			sort(sa, sa + n, cmp);
+			
+			tg[sa[0]] = 0;
+			for(int i = 1; i< n; i++) {
+				if(cmp(sa[i-1], sa[i])) tg[sa[i]] = tg[sa[i-1]] + 1;
+				else tg[sa[i]] = tg[sa[i-1]];
+			}
+			for(int i = 0; i< n;i++) g[i] = tg[i];
+			t <<= 1;
+		}
+		
+		for(int i = 0; i < n; i++) {
+			r[sa[i]] = i;
+		}
+		int len = 0;
+		for(int i = 0; i < n; i++) {
+			int k = r[i];
+			if(k) {
+				int j = sa[k-1];
+				while(a[j + len] == a[i + len]) len++;
+
+				lcp[k] = len;
+				if(len) --len;
+			}
+		}
+		int temp = 0, ans = 0; 
+		for(int i = 1; i < n; i++) {
+			if(temp < lcp[i]) {
+				ans += lcp[i] - temp;
+			}
+			temp = lcp[i];
+		}
+		printf("%d\n", ans);
+	}
+	return 0;
+}
