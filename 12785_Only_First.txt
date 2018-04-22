@@ -1,0 +1,40 @@
+﻿/*
+12785_토쟁이의 등굣길
+	
+	경우의 수를 구하는 간단한 DP 문제였다.	
+	Only_First
+*/
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+const int CUT = 1000007;
+int cache[210][210];
+
+int dir[2][2] = { { 0, 1}, {1, 0} };
+int w, h, x, y, first;
+
+int back(int row, int col, int N, int M) {
+	int &ret = cache[row][col];
+	if(ret != -1) return ret;
+	if(row == N && col == M) return ret = first;		
+	ret = 0;
+	if(row + 1 <= N) ret += back(row + 1, col, N, M);
+	ret %= CUT;
+	if(col + 1 <= M) ret += back(row, col + 1, N, M);
+	ret %= CUT;
+	return ret;
+}
+int main() {
+	scanf("%d %d", &w, &h);
+	scanf("%d %d", &x, &y);
+	memset(cache, -1, sizeof(int) * 44100);
+	
+	first = 1;
+	first = back(1, 1, x, y);
+
+	memset(cache, -1, sizeof(int) * 44100);
+	int ans = back(x, y, w, h);
+	printf("%d\n", ans);
+	return 0;
+}

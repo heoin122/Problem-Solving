@@ -1,0 +1,40 @@
+﻿/*
+	14716_현수막
+	
+	간단한 탐색 문제였다. DFS
+	Only_First
+*/
+#include <iostream>
+using namespace std;
+
+int a[260][260];
+int dir[8][2] = { {-1, 0}, {1, 0}, {0, 1}, {0, -1}, {-1, -1}, {-1, 1}, {1, -1}, {1, 1} };
+int n, m;
+void back(int x, int y) {
+	a[x][y] = 0;
+	for(int i = 0; i<8; i++){
+		int tx = x + dir[i][0], ty = y + dir[i][1];
+		if(tx < 0 || tx >= n || ty < 0 || ty >=m || !a[tx][ty]) continue;
+		back(tx, ty);
+	}
+}
+int main() {
+	scanf("%d %d", &n, &m);
+	for(int i = 0; i<n; i++){
+		for(int j = 0; j<m; j++){
+			scanf("%d", &a[i][j]);
+		}
+	}
+	int ans = 0;
+	for(int i = 0; i<n; i++){
+		for(int j = 0; j<m; j++){
+			if(a[i][j]) {
+				ans++;
+				back(i, j);	
+			}
+			
+		}
+	}
+	printf("%d", ans);
+	return 0;
+}
