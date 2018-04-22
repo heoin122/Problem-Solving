@@ -1,0 +1,66 @@
+﻿/*
+	3789_Hidden Password 
+	
+	문자열을 2배로 복사한 다음에 Suffix Array를 이용하여 해결하는 문제였다.
+	strcat을 사용했을 경우 런타임 에러가 발생하였고
+	copy를 이용하였을 때에는 발생하지 않았다. 
+	First
+
+*/
+#include <iostream>
+#include <string.h>
+#include <algorithm>
+
+using namespace std;
+
+const int MAXN = 200010;
+int sa[MAXN], g[MAXN], tg[MAXN], r[MAXN], lcp[MAXN];
+char a[MAXN];
+int t, n;
+
+bool cmp(int x, int y) {
+	if(g[x] != g[y]) return g[x] < g[y];
+	x += t;
+	y += t;
+	return (x < n && y < n) ? (g[x] < g[y]) : (x > y);
+}
+int main() {
+	int testcase;
+	
+	scanf("%d", &testcase);
+	while(testcase--) {
+		int length;
+		scanf("%d ", &length);
+		scanf("%s", a);
+		copy(a, a+length, a+length);
+		n = strlen(a);
+		for(int i = 0; i < n; i++) {
+			sa[i] = i;
+			g[i] = a[i] - 'a';
+		}		
+		t = 1;
+		while(t <= n) {
+			g[n] = -1;
+			sort(sa, sa + n, cmp);
+			
+			tg[sa[0]] = 0;
+			for(int i = 1; i< n; i++) {
+				if(cmp(sa[i-1], sa[i])) tg[sa[i]] = tg[sa[i-1]] + 1;
+				else tg[sa[i]] = tg[sa[i-1]];
+			}
+			for(int i = 0; i< n;i++) g[i] = tg[i];
+			t <<= 1;
+		}
+		int result = length;
+		bool chk = false;
+		for(int i = 0; ; i++) {
+			if(sa[i] < length) {
+				result = min(result, sa[i]);
+				chk = true;
+			} else if(chk) break;
+		}
+		printf("%d\n", result);
+		fill(a, a+MAXN, 0);
+	}
+	return 0;
+}

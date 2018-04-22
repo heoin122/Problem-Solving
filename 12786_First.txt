@@ -1,0 +1,53 @@
+﻿/*
+	12786_INHA SUIT
+
+	DP 문제였다.
+	아직 DP 설계가 정확히 되지 않는다. 
+	증명이 덜 되는 상태에서 짜기도 하고.. 좀더 코딩하기전에
+	확실하게 증명이 되도록 연습해야겠다.
+	First
+*/
+#include <iostream>
+#include <cstring>
+#include <limits>
+#include <vector>
+
+using namespace std;
+
+const int IMAX = std::numeric_limits<int>::max();
+
+int cache[110][30][60];
+int n , t;
+vector<vector<int> > con; 
+int back(int height, int idx, int tCnt) {
+	int &ret = cache[idx][height][tCnt];
+	if(ret != -1) return ret;
+	if(idx >= n) return tCnt;	
+	ret = IMAX;
+	for(auto it = con[idx].begin(); it != con[idx].end(); it++) {
+		if(height == *it || height + 1 == *it || (height * 2 > 20 ? 20 : height * 2) == *it || height - 1 == *it) {
+			ret = min(ret, back(*it, idx + 1, tCnt));
+		} else if(tCnt < t) {
+			ret = min(ret, back(*it, idx + 1, tCnt + 1));
+		}
+	}
+	return ret;
+}
+int main() {
+	int temp, x;
+	scanf("%d", &n);
+	scanf("%d", &t);
+	con.resize(n);
+	memset(cache, -1, sizeof(int) * 198000);
+	for(int i = 0; i<n; i++){
+		scanf("%d", &temp);
+		for(int j = 0; j<temp; j++){
+			scanf("%d", &x);
+			con[i].push_back(x);
+		}	
+	}
+	int ans = back(1, 0, 0);
+	if(ans != IMAX) printf("%d", ans);
+	else printf("-1");
+	return 0;
+}
