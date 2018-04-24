@@ -1,0 +1,56 @@
+﻿/*
+	12784_인하니카 공화국
+
+	트리 문제였다. 루트부터 내려가서 자식들을 끊는게 더 적을지, 부모를 끊는게 더 적을지 구하는 문제였다.
+	다른 분들의 구현을 좀 알아보자.
+	First
+*/
+#include <iostream>
+#include <limits>
+#include <vector>
+
+using namespace std;
+
+struct edge { int idx, dst; };
+
+const int MAXN = 1010;
+bool chk[MAXN];
+int v[MAXN][MAXN];
+int n, m;
+
+int back(int node, vector<vector<edge> > &con, vector<bool> &chk) {
+	chk[node] = true;
+	int ret = 0;
+	for(int i = 0; i<con[node].size(); i++) {
+		int next = con[node][i].idx;
+		if(chk[next]) continue;
+		int temp = back(next, con, chk);
+		if(temp == 0) {
+			ret += con[node][i].dst;
+		} else {
+			if(temp < con[node][i].dst) ret += temp;
+			else ret += con[node][i].dst;
+		}
+	}
+	return ret;
+}
+void solve() {
+	int x, y, val;
+	scanf("%d %d", &n, &m);
+	vector< vector<edge> > con(n+1);
+	vector<bool> chk(n+1);
+	for(int i = 0; i<m; i++) {
+		scanf("%d %d %d", &x, &y, &val);
+		con[x].push_back({y, val});
+		con[y].push_back({x, val});
+	}
+	printf("%d\n", back(1, con, chk));
+}
+int main() {
+	int testcase;
+	scanf("%d", &testcase);
+	while(testcase--) {
+		solve();
+	}
+	return 0;
+}
