@@ -1,0 +1,33 @@
+﻿/*
+12782_비트 우정지수
+	
+	구현 문제였다. 
+	Only First
+*/
+#include <iostream>
+#include <vector>
+#include <string.h>
+
+using namespace std;
+
+const int MAXN = 1000010;
+char a[MAXN], b[MAXN];
+int n;
+
+int main() {
+	scanf("%d", &n);
+	for(int i = 0; i<n; i++){
+		scanf("%s %s", a, b);
+		int size = strlen(a);
+		vector<int> cnt(3, 0);
+		for(int i = 0; i<size; i++) {
+			int temp = a[i] - b[i];
+			if(temp != 0) {
+				if(temp > 0) cnt[1]++;
+				else cnt[0]++;
+			}
+		}		
+		printf("%d\n", cnt[0] > cnt[1] ? cnt[0]: cnt[1]);
+	}
+	return 0;
+}

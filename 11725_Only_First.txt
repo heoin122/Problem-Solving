@@ -1,0 +1,35 @@
+﻿/*
+11725_트리의 부모 찾기
+
+	트리에서 부모를 찾는 문제였다.	
+	트리 탐색만 하면서 parent 배열을 채우면 된다.
+	Only_First
+*/
+#include <iostream>
+#include <vector>
+using namespace std;
+
+vector< vector<int> > con;
+int parent[100010];
+int n;
+void back(int node, int pre) {
+	for(int i = 0; i<con[node].size(); i++) {
+		int next = con[node][i];
+		if(next == pre) continue;
+		parent[next] = node;
+		back(next, node);
+	}
+}
+int main() {
+	int x, y;
+	scanf("%d", &n);
+	con.resize(n+1);
+	for(int i = 0; i<n; i++) {
+		scanf("%d %d", &x, &y);
+		con[x].push_back(y);
+		con[y].push_back(x);
+	}
+	back(1, 0);
+	for(int i = 2; i<=n; i++) printf("%d\n", parent[i]);
+	return 0;
+}
