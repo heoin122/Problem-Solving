@@ -1,0 +1,37 @@
+﻿/*
+11723_집합 
+	
+	집합 문제여서 set을 사용했으나, 시간초과가 났다.
+	비트마스크를 이용하여 해결하였다. string을 입력받는데 cin을 사용했는데
+	시간이 너무 오래걸린다. scanf로 다 받도록 해야겠다.
+	비트마스크, set 사용법을 정확히 익히는게 좋을 것 같다.
+	First
+*/
+#include <iostream>
+#include <string.h>
+using namespace std;
+
+const int FULL = (1<<21) - 1;
+int main() {
+	char type[10];
+	int n, S = 0, tv;
+	scanf("%d", &n);
+	for(int i = 1; i<=n; i++){
+		scanf("%s %d", type, &tv);
+		if(!strcmp(type, "add")) {
+			S |= (1<<tv);		
+		} else if(!strcmp(type, "remove")) {
+			S &= ~(1<<tv);
+		} else if(!strcmp(type, "check")) {
+			if((S & (1<<tv)) > 0) printf("1\n");
+			else printf("0\n");
+		} else if(!strcmp(type, "toggle")) {
+			S ^= (1<<tv);
+		} else if(!strcmp(type, "all")) {
+			S = FULL;
+		} else if(!strcmp(type, "empty")) {
+			S = 0;
+		}
+	}
+	return 0;
+}
