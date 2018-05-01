@@ -1,0 +1,26 @@
+﻿/*
+10812_바구니 순서 바꾸기
+
+	단순 구현 문제였다.
+	Only_First
+*/
+#include <iostream>
+using namespace std;
+
+int arr[110], tarr[110];
+int main() {
+	int n, m;
+	scanf("%d %d", &n, &m);
+	for(int i = 1; i<=n; i++) arr[i] = i;
+	
+	int x, y, mid, j, p;
+	for(int i = 0; i < m; i++) {
+		scanf("%d %d %d", &x, &y, &mid);
+		for(int j = 1; j<=n; j++) tarr[j] = arr[j];
+		for(j = mid, p = x; j <= y; j++, p++) tarr[p] = arr[j];
+		for(j = x; j < mid; j++, p++) tarr[p] = arr[j];
+		for(int j = 1; j<=n; j++) arr[j] = tarr[j];
+	}
+	for(int j = 1; j<=n; j++) printf("%d ",arr[j]);
+	return 0;
+}

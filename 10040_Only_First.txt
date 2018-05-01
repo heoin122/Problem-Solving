@@ -1,0 +1,34 @@
+﻿/*
+10040_투표
+
+	단순 구현 문제이다.
+	Only_First
+*/
+#include <iostream>
+using namespace std;
+
+int a[1010], b[1010], cnt[1010];
+int main() {
+	int n, m;
+	scanf("%d %d", &n, &m);
+	for(int i = 1; i<=n; i++) scanf("%d", &a[i]);
+	for(int i = 1; i<=m; i++) scanf("%d", &b[i]);
+	
+	for(int j = 1; j<=m; j++){
+		for(int i = 1; i<=n; i++){
+			if(a[i] <= b[j]) {
+				cnt[i]++;
+				break;
+			}
+		}
+	}
+	int MAX = 0, MP;
+	for(int i = 1; i<=n; i++){
+		if(MAX < cnt[i]) {
+			MAX = cnt[i];
+			MP = i;
+		}
+	}
+	printf("%d", MP);
+	return 0;
+}
