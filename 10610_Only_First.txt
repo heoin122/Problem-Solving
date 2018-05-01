@@ -1,0 +1,36 @@
+﻿/*
+10610_30
+	
+	단순 구현 문제였다.
+	Only_First
+*/
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+int cnt[10];
+char arr[100010];
+int main() {
+	scanf("%s", arr);
+	int size = strlen(arr);
+	
+	for(int i = 0; i<size; i++){
+		cnt[arr[i]-'0']++;
+	}
+	if(cnt[0] == 0) {
+		printf("-1");
+	} else {
+		int sum = 0;
+		for(int i = 9; i>=0; i--) {
+			sum += cnt[i] * i;
+		}
+		if(sum % 3 != 0) {
+			printf("-1");
+		} else {
+			for(int i = 9; i>=0; i--) 
+				for(int j = 0; j < cnt[i]; j++) 
+					printf("%d", i);
+		}
+	}
+	return 0;
+}

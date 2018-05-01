@@ -1,0 +1,36 @@
+﻿/*
+10709_기상캐스터
+
+	기본 구현 문제였다.
+	Only_First
+*/
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+int ret[110][110];
+char arr[110][110];
+int main() {
+	int n, m;
+	scanf("%d %d", &n, &m);
+	for(int i = 0; i<n; i++){
+		scanf("%s", arr[i]);
+	}
+	for(int i = 0; i<n; i++){
+		int t = -1;
+		for(int j = 0; j<m; j++){
+			if(arr[i][j] == 'c') t = 0;
+			else {
+				if(t != -1) t++;
+			}
+			ret[i][j] = t;
+		}
+	}
+	for(int i = 0; i<n; i++){
+		for(int j = 0; j<m; j++){
+			printf("%d ", ret[i][j]);
+		}
+		printf("\n");
+	}
+	return 0;
+}
